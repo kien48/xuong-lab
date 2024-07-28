@@ -17,6 +17,18 @@ class EventServiceProvider extends ServiceProvider
     protected $listen = [
         Registered::class => [
             SendEmailVerificationNotification::class,
+            'App\Events\OrderCreated' => [
+                'App\Listeners\SendOrderConfirmation',
+                'App\Listeners\NotifyManagerNewOrder',
+            ],
+            'App\Events\OrderStatusUpdated' => [
+                'App\Listeners\SendStatusUpdateEmail',
+                'App\Listeners\SendPushNotification',
+            ],
+            'App\Events\OrderCancelled' => [
+                'App\Listeners\SendCancellationEmail',
+                'App\Listeners\NotifyManagerOrderCancelled',
+            ],
         ],
     ];
 
